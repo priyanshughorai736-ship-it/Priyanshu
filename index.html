@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyFlow - Smart Student Study Planner & Syllabus Tracker</title>
+  <meta name="description"
+    content="StudyFlow automatically generates realistic daily study schedules, breaks, and spaced revision based on your subjects, syllabus, exam dates, and daily availability.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Desktop Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="brand-section">
+        <div class="brand-logo-icon">SF</div>
+        <div>
+          <div style="display:flex;align-items:center;gap:0.4rem;">
+            <span class="brand-title">StudyFlow</span>
+            <span class="brand-badge">MVP</span>
+          </div>
+          <p style="font-size:0.7rem;color:var(--text-faint);">Smart Academic Planner</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#dashboard" class="nav-item active" data-view="dashboard" id="nav-dashboard">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="#subjects" class="nav-item" data-view="subjects" id="nav-subjects">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+          </svg>
+          <span>Subjects & Syllabus</span>
+        </a>
+
+        <a href="#plan" class="nav-item" data-view="plan" id="nav-plan">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+          <span>Today's Plan</span>
+        </a>
+
+        <a href="#calendar" class="nav-item" data-view="calendar" id="nav-calendar">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          <span>Calendar</span>
+        </a>
+
+        <a href="#progress" class="nav-item" data-view="progress" id="nav-progress">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+          <span>Progress</span>
+        </a>
+
+        <a href="#timer" class="nav-item" data-view="timer" id="nav-timer">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <span>Study Timer</span>
+        </a>
+
+        <a href="#settings" class="nav-item" data-view="settings" id="nav-settings">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-snippet" id="sidebar-user-snippet" title="Click to view student profile & account" style="cursor:pointer;">
+          <div class="user-avatar" id="sidebar-user-avatar">A</div>
+          <div class="user-info">
+            <span class="user-name" id="sidebar-user-name">Alex Mitchell</span>
+            <span class="user-streak" id="sidebar-user-streak">🔥 4 Day Streak</span>
+          </div>
+        </div>
+        <button type="button" class="btn-link" id="btn-sidebar-logout" style="font-size:0.75rem;color:var(--rose);margin-top:0.4rem;display:inline-flex;align-items:center;gap:0.3rem;">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Shell -->
+    <main class="app-main">
+      <!-- Top Sticky Header -->
+      <header class="app-header">
+        <div class="header-left" style="display:flex;align-items:center;gap:0.6rem;">
+          <h1 class="page-title" id="header-page-title">Dashboard Overview</h1>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-secondary btn-sm" id="btn-header-mobile-connect" title="Open on Mobile / Laptop with QR code">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+              <line x1="12" y1="18" x2="12.01" y2="18"/>
+            </svg>
+            <span class="btn-label-desktop">Mobile Access</span>
+          </button>
+
+          <button class="btn btn-primary btn-sm" id="btn-header-plan-day"
+            title="Trigger smart automated daily scheduler">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+            <span class="btn-label-desktop">Plan Day</span>
+          </button>
+
+          <button class="btn btn-secondary btn-sm" id="btn-header-quick-timer" title="Open Pomodoro Timer">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            <span class="btn-label-desktop">Timer</span>
+          </button>
+
+          <button class="btn-icon" id="btn-toggle-theme" title="Toggle Dark/Light Mode">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="5" />
+              <path
+                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+            </svg>
+          </button>
+
+          <div class="header-user-badge" id="header-user-badge" title="View student profile">
+            <div class="header-user-avatar" id="header-user-avatar">A</div>
+            <span class="header-user-name" id="header-user-name">Alex</span>
+          </div>
+
+          <button class="btn btn-outline-danger btn-sm" id="btn-header-logout" title="Log out student">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            <span class="btn-label-desktop">Log Out</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Views Container -->
+      <div class="content-container">
+
+        <!-- ==========================================
+             VIEW 1: DASHBOARD
+             ========================================== -->
+        <section class="view-section active" id="view-dashboard">
+          <!-- "What should I study now?" Hero Card -->
+          <div class="study-now-hero" id="hero-study-now">
+            <!-- Rendered dynamically by UIManager -->
+          </div>
+
+          <!-- Quick Metrics Grid -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-header">
+                <span>Today's Study Progress</span>
+                <div class="metric-icon-box" style="background:rgba(99, 102, 241, 0.15);color:var(--primary);">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-value" id="metric-today-progress">0.0 / 4.0 hrs</div>
+              <div class="metric-subtext" id="metric-today-pct">0% tasks completed</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span>Overall Syllabus</span>
+                <div class="metric-icon-box" style="background:rgba(16, 185, 129, 0.15);color:var(--emerald);">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-value" id="metric-syllabus-progress">0%</div>
+              <div class="metric-subtext" id="metric-syllabus-sub">0 hrs remaining</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span>Study Streak</span>
+                <div class="metric-icon-box" style="background:rgba(245, 158, 11, 0.15);color:var(--amber);">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-value" id="metric-streak-count">4 Days</div>
+              <div class="metric-subtext">Keep up the momentum!</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span>Next Upcoming Exam</span>
+                <div class="metric-icon-box" style="background:rgba(239, 68, 68, 0.15);color:var(--rose);">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-value" id="metric-exam-countdown">7d</div>
+              <div class="metric-subtext" id="metric-exam-sub">Mathematics</div>
+            </div>
+          </div>
+
+          <!-- Dashboard 2-Column Section -->
+          <div class="dashboard-grid">
+            <!-- Left: Today's Schedule Timeline -->
+            <div class="card-panel">
+              <div class="card-panel-header">
+                <h3 class="panel-title">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <polyline points="9 11 12 14 22 4" />
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                  </svg>
+                  Today's Study Schedule
+                </h3>
+                <button class="btn btn-secondary btn-sm" onclick="window.app.ui.switchView('plan')">
+                  View Full Schedule →
+                </button>
+              </div>
+
+              <div class="timeline-list" id="dashboard-timeline-list">
+                <!-- Timeline items rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Right: Upcoming Exams & AI Advisor -->
+            <div>
+              <div class="card-panel">
+                <div class="card-panel-header">
+                  <h3 class="panel-title">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                      <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                    Upcoming Exams
+                  </h3>
+                  <button class="btn btn-secondary btn-sm" onclick="window.app.ui.switchView('subjects')">
+                    Manage
+                  </button>
+                </div>
+
+                <div class="exams-list" id="dashboard-exams-list">
+                  <!-- Exam countdown cards rendered dynamically -->
+                </div>
+              </div>
+
+              <div class="ai-advisor-box" id="dashboard-ai-insights">
+                <!-- AI tactical insights rendered dynamically -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 2: SUBJECTS & SYLLABUS
+             ========================================== -->
+        <section class="view-section" id="view-subjects">
+          <div class="subjects-header-bar">
+            <div>
+              <h2 style="font-size:1.4rem;font-weight:700;">Subjects & Syllabus Modules</h2>
+              <p style="color:var(--text-muted);font-size:0.85rem;">Track topic completion, difficulty weights, exam
+                targets, and revision cycles.</p>
+            </div>
+            <button class="btn btn-primary" id="btn-add-subject-open">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Add New Subject
+            </button>
+          </div>
+
+          <div class="subjects-grid" id="subjects-grid-container">
+            <!-- Subject cards rendered dynamically -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 3: TODAY'S PLAN
+             ========================================== -->
+        <section class="view-section" id="view-plan">
+          <div class="plan-controls-bar">
+            <div class="date-navigator">
+              <button class="btn btn-icon btn-sm" id="btn-plan-prev-day" title="Previous Day">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+              <h3 class="current-date-label" id="plan-date-heading">Today</h3>
+              <button class="btn btn-icon btn-sm" id="btn-plan-next-day" title="Next Day">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+              <button class="btn btn-secondary btn-sm" id="btn-plan-today">Today</button>
+            </div>
+
+            <div style="display:flex;gap:0.75rem;">
+              <button class="btn btn-emerald" id="btn-regenerate-plan">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                </svg>
+                Re-balance Schedule
+              </button>
+            </div>
+          </div>
+
+          <div class="full-plan-timeline" id="full-plan-timeline-container">
+            <!-- Full day plan cards rendered dynamically -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 4: CALENDAR
+             ========================================== -->
+        <section class="view-section" id="view-calendar">
+          <div class="calendar-wrapper">
+            <div class="calendar-header-nav">
+              <h2 class="month-year-label" id="cal-month-year-label">Calendar</h2>
+              <div style="display:flex;gap:0.5rem;">
+                <button class="btn btn-secondary btn-sm" id="btn-cal-today">Current Month</button>
+                <button class="btn btn-icon btn-sm" id="btn-cal-prev">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                </button>
+                <button class="btn btn-icon btn-sm" id="btn-cal-next">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="calendar-weekdays">
+              <div>Sun</div>
+              <div>Mon</div>
+              <div>Tue</div>
+              <div>Wed</div>
+              <div>Thu</div>
+              <div>Fri</div>
+              <div>Sat</div>
+            </div>
+
+            <div class="calendar-grid-days" id="calendar-grid-cells">
+              <!-- Calendar grid cells rendered dynamically -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 5: PROGRESS & ANALYTICS
+             ========================================== -->
+        <section class="view-section" id="view-progress">
+          <div class="card-panel" style="margin-bottom:2rem;">
+            <h3 class="panel-title" style="margin-bottom:1rem;">Overall Academic Readiness</h3>
+            <div
+              style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:1.5rem;align-items:center;">
+              <div>
+                <div style="font-size:3rem;font-weight:800;color:var(--primary);line-height:1;"
+                  id="progress-overall-percent">0%</div>
+                <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.4rem;">Total Syllabus Mastered</div>
+              </div>
+              <div style="flex:1;">
+                <div class="progress-track" style="height:12px;">
+                  <div class="progress-fill" id="progress-overall-bar"
+                    style="width:0%;background:linear-gradient(90deg, var(--primary), var(--cyan));"></div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:1.4rem;font-weight:700;" id="progress-remaining-hours">0 hrs</div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">Syllabus Hours Remaining</div>
+              </div>
+              <div>
+                <div style="font-size:1.4rem;font-weight:700;color:var(--amber);" id="progress-estimated-days">~0 days
+                </div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">Estimated Completion Runway</div>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:1rem;">Subject-by-Subject Syllabus Breakdown</h3>
+          <div id="progress-subjects-breakdown">
+            <!-- Rendered dynamically -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 6: TIMER / POMODORO
+             ========================================== -->
+        <section class="view-section" id="view-timer">
+          <div class="timer-section-container">
+            <div class="timer-card">
+              <div class="timer-mode-switcher">
+                <button class="mode-tab-btn active" data-mode="work">Pomodoro (25m)</button>
+                <button class="mode-tab-btn" data-mode="short_break">Short Break (5m)</button>
+                <button class="mode-tab-btn" data-mode="long_break">Long Break (15m)</button>
+              </div>
+
+              <!-- Topic Linking Dropdown -->
+              <div class="timer-topic-select-row">
+                <label style="font-size:0.8rem;color:var(--text-muted);font-weight:600;text-align:left;">Track Progress
+                  For:</label>
+                <select class="timer-select" id="timer-subject-select">
+                  <option value="">-- Choose Subject to Track --</option>
+                </select>
+                <select class="timer-select" id="timer-topic-select" disabled>
+                  <option value="">-- First Select Subject --</option>
+                </select>
+              </div>
+
+              <!-- Circular Progress SVG Ring -->
+              <div class="timer-ring-wrapper">
+                <svg class="timer-svg" viewBox="0 0 300 300">
+                  <circle class="timer-circle-bg" cx="150" cy="150" r="130"></circle>
+                  <circle class="timer-circle-fg" id="timer-progress-ring" cx="150" cy="150" r="130"></circle>
+                </svg>
+                <div class="timer-digits-center">
+                  <div class="timer-time-display" id="timer-display-time">25:00</div>
+                  <div class="timer-status-label" id="timer-status-text">FOCUS SESSION</div>
+                </div>
+              </div>
+
+              <!-- Controls -->
+              <div class="timer-controls-row">
+                <button class="btn btn-secondary btn-icon" id="btn-timer-reset" title="Reset Session">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                  </svg>
+                </button>
+                <button class="btn-timer-main" id="btn-timer-play" title="Start Focus Session">
+                  <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
+                </button>
+                <button class="btn-timer-main" id="btn-timer-pause" style="display:none;" title="Pause Session">
+                  <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24">
+                    <rect x="6" y="4" width="4" height="16" />
+                    <rect x="14" y="4" width="4" height="16" />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Ambient Noise Audio Synthesizer Toggle -->
+              <label class="timer-ambient-toggle">
+                <input type="checkbox" id="check-timer-ambient"
+                  style="accent-color:var(--primary);width:16px;height:16px;">
+                <span>🌧️ Play Synthesized Ambient Focus Sound (Rain / Pink Noise)</span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 7: SETTINGS
+             ========================================== -->
+        <section class="view-section" id="view-settings">
+          <div class="card-panel settings-card">
+            <h3 class="panel-title" style="margin-bottom:1.5rem;">Routine & Scheduling Preferences</h3>
+
+            <form id="form-settings">
+              <div class="settings-group">
+                <h4 class="group-title">Study Availability & Target</h4>
+                <p class="group-subtitle">Configure how many hours you plan to dedicate daily to study.</p>
+                <div class="form-group">
+                  <label class="form-label" for="setting-daily-hours">Daily Study Target (Hours)</label>
+                  <input type="number" step="0.5" min="1" max="14" class="form-input" id="setting-daily-hours"
+                    value="4.5">
+                </div>
+              </div>
+
+              <div class="settings-group">
+                <h4 class="group-title">Sleep & College / Class Schedule</h4>
+                <p class="group-subtitle">StudyFlow prevents scheduling study blocks during sleep and class time.</p>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="setting-sleep-start">Sleep Time (Bedtime)</label>
+                    <input type="time" class="form-input" id="setting-sleep-start" value="23:00">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="setting-sleep-end">Wake Up Time</label>
+                    <input type="time" class="form-input" id="setting-sleep-end" value="07:00">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="setting-college-start">College / Classes Start</label>
+                    <input type="time" class="form-input" id="setting-college-start" value="09:00">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="setting-college-end">College / Classes End</label>
+                    <input type="time" class="form-input" id="setting-college-end" value="14:30">
+                  </div>
+                </div>
+              </div>
+
+              <div class="settings-group">
+                <h4 class="group-title">Pomodoro Intervals</h4>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="setting-pomo-work">Focus Interval (Minutes)</label>
+                    <input type="number" class="form-input" id="setting-pomo-work" value="25">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="setting-pomo-break">Short Break (Minutes)</label>
+                    <input type="number" class="form-input" id="setting-pomo-break" value="5">
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width:100%;">
+                Save Preferences
+              </button>
+            </form>
+
+            <div class="settings-group"
+              style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border-subtle);">
+              <h4 class="group-title">Data Backup & Recovery</h4>
+              <p class="group-subtitle">Everything is securely saved in your browser's LocalStorage. You can export a
+                JSON backup anytime.</p>
+              <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+                <button class="btn btn-secondary" id="btn-export-data">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  Export JSON Backup
+                </button>
+                <label class="btn btn-secondary" style="cursor:pointer;">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+                  </svg>
+                  Import Backup JSON
+                  <input type="file" id="input-import-data" accept=".json" style="display:none;">
+                </label>
+                <button class="btn btn-secondary" id="btn-reset-sample-data" style="color:var(--rose);">
+                  Reset To Sample Dataset
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav">
+      <button class="mobile-nav-btn active" data-view="dashboard">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
+        </svg>
+        <span>Home</span>
+      </button>
+      <button class="mobile-nav-btn" data-view="subjects">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+        <span>Syllabus</span>
+      </button>
+      <button class="mobile-nav-btn" data-view="plan">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <polygon
+            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+        <span>Plan</span>
+      </button>
+      <button class="mobile-nav-btn" data-view="calendar">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+        </svg>
+        <span>Calendar</span>
+      </button>
+      <button class="mobile-nav-btn" data-view="timer">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        <span>Timer</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ==========================================
+       MODAL: ADD / EDIT SUBJECT
+       ========================================== -->
+  <div class="modal-backdrop" id="modal-subject">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-subject-title">Add New Subject</h3>
+        <button class="btn btn-icon btn-sm btn-close-modal">✕</button>
+      </div>
+      <form id="form-subject">
+        <input type="hidden" id="sub-edit-id">
+        <div class="modal-body">
+          <div class="form-group" style="margin-bottom:1rem;">
+            <label class="form-label" for="sub-name">Subject Name *</label>
+            <input type="text" class="form-input" id="sub-name" required
+              placeholder="e.g. Mathematics, Organic Chemistry">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="sub-code">Subject Code</label>
+              <input type="text" class="form-input" id="sub-code" placeholder="e.g. MATH101">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="sub-exam-date">Exam Date *</label>
+              <input type="date" class="form-input" id="sub-exam-date" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="sub-priority">Priority</label>
+              <select class="form-input" id="sub-priority">
+                <option value="high">High Priority</option>
+                <option value="medium" selected>Medium Priority</option>
+                <option value="low">Low Priority</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="sub-difficulty">Difficulty (1 to 5 Stars)</label>
+              <select class="form-input" id="sub-difficulty">
+                <option value="1">1 - Very Easy</option>
+                <option value="2">2 - Easy</option>
+                <option value="3" selected>3 - Moderate</option>
+                <option value="4">4 - Hard</option>
+                <option value="5">5 - Very Hard</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="sub-color">Theme Accent Color</label>
+            <input type="color" class="form-input" id="sub-color" value="#6366f1"
+              style="height:42px;padding:0.25rem 0.5rem;">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-close-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Subject</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL: ADD TOPIC
+       ========================================== -->
+  <div class="modal-backdrop" id="modal-topic">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Add Syllabus Topic</h3>
+        <button class="btn btn-icon btn-sm btn-close-modal">✕</button>
+      </div>
+      <form id="form-topic">
+        <input type="hidden" id="topic-subject-id">
+        <div class="modal-body">
+          <div class="form-group" style="margin-bottom:1rem;">
+            <label class="form-label" for="topic-name">Topic / Chapter Name *</label>
+            <input type="text" class="form-input" id="topic-name" required
+              placeholder="e.g. Differential Calculus, Thermodynamics">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="topic-hours">Estimated Hours Needed</label>
+              <input type="number" step="0.5" min="0.5" max="20" class="form-input" id="topic-hours" value="3.0">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="topic-difficulty">Difficulty (1-5)</label>
+              <select class="form-input" id="topic-difficulty">
+                <option value="1">1 - Easy</option>
+                <option value="2">2 - Mild</option>
+                <option value="3" selected>3 - Medium</option>
+                <option value="4">4 - Tough</option>
+                <option value="5">5 - Challenging</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="topic-status">Current Status</label>
+            <select class="form-input" id="topic-status">
+              <option value="not_started" selected>Not Started</option>
+              <option value="in_progress">In Progress</option>
+              <option value="completed">Completed (Will schedule spaced revision)</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-close-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Topic</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL: ONBOARDING WIZARD
+       ========================================== -->
+  <div class="modal-backdrop" id="modal-onboarding">
+    <div class="modal-dialog" style="max-width:560px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Welcome to StudyFlow 🚀</h3>
+      </div>
+      <div class="modal-body">
+        <div id="onboard-step-1">
+          <h4 style="font-size:1.15rem;margin-bottom:0.5rem;">Step 1: Set Your Daily Study Routine</h4>
+          <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.25rem;">
+            StudyFlow balances your urgent syllabus without burnout by fitting study sessions between your sleep,
+            college, and breaks.
+          </p>
+          <div class="form-group">
+            <label class="form-label" for="onboard-daily-hours">How many hours can you realistically study per
+              day?</label>
+            <input type="number" step="0.5" min="1" max="12" class="form-input" id="onboard-daily-hours" value="4.5">
+          </div>
+        </div>
+
+        <div id="onboard-step-2" style="display:none;">
+          <h4 style="font-size:1.15rem;margin-bottom:0.5rem;">Step 2: Pre-Loaded Sample Subjects</h4>
+          <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.25rem;">
+            We've pre-populated realistic curriculum data for:
+          </p>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            <div
+              style="padding:0.75rem;background:var(--bg-surface);border-radius:var(--radius-sm);border-left:4px solid #8b5cf6;">
+              <strong>Mathematics</strong> • Exam in 7 days • Differential Calculus, Linear Algebra
+            </div>
+            <div
+              style="padding:0.75rem;background:var(--bg-surface);border-radius:var(--radius-sm);border-left:4px solid #06b6d4;">
+              <strong>Physics</strong> • Exam in 12 days • Thermodynamics, Electromagnetism
+            </div>
+            <div
+              style="padding:0.75rem;background:var(--bg-surface);border-radius:var(--radius-sm);border-left:4px solid #10b981;">
+              <strong>Programming in C</strong> • Exam in 18 days • Pointers, Memory Management
+            </div>
+            <div
+              style="padding:0.75rem;background:var(--bg-surface);border-radius:var(--radius-sm);border-left:4px solid #f59e0b;">
+              <strong>English</strong> • Exam in 25 days • Technical Reports, Communication
+            </div>
+          </div>
+        </div>
+
+        <div id="onboard-step-3" style="display:none;">
+          <h4 style="font-size:1.15rem;margin-bottom:0.5rem;">Step 3: Ready to Excel!</h4>
+          <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.25rem;">
+            When you click below, StudyFlow's algorithm will immediately generate today's schedule, insert 10-minute
+            breaks, and highlight <strong>"What should I study now?"</strong>.
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btn-onboard-next">Continue →</button>
+        <button type="button" class="btn btn-emerald" id="btn-onboard-finish" style="display:none;">🚀 Generate My Study
+          Plan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MOBILE BOTTOM NAVIGATION
+       ========================================== -->
+  <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
+    <button type="button" class="mobile-nav-btn active" data-view="dashboard" id="btn-m-dashboard">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span>Home</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" data-view="subjects" id="btn-m-subjects">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <span>Subjects</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" data-view="plan" id="btn-m-plan">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span>Plan</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" data-view="timer" id="btn-m-timer">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>Timer</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" data-view="calendar" id="btn-m-calendar">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Calendar</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" id="btn-m-account">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Account</span>
+    </button>
+  </nav>
+
+  <!-- ==========================================
+       MODAL: MOBILE & LAPTOP ACCESS (QR CONNECT)
+       ========================================== -->
+  <div class="modal-backdrop" id="modal-device-connect">
+    <div class="modal-dialog" style="max-width:500px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="display:flex;align-items:center;gap:0.5rem;">
+          <span>📱</span> Access on Mobile & Any Laptop
+        </h3>
+        <button type="button" class="btn-icon btn-close-modal" title="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;line-height:1.45;">
+          Any student can access StudyFlow instantly from their <strong>mobile phone, tablet, or another laptop</strong> connected to the same Wi-Fi network!
+        </p>
+
+        <div class="qr-card-container">
+          <div class="qr-code-img-box">
+            <img id="qr-code-img" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=http://10.163.119.20:8080" alt="Scan QR code to open on mobile">
+          </div>
+          <div style="font-size:0.75rem;color:var(--text-faint);">
+            📷 Point your phone camera at this QR code to open immediately
+          </div>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <label class="form-label" style="margin-bottom:0.4rem;display:block;">Wi-Fi & Network URL (For Mobile / Other Laptops):</label>
+          <div class="url-pill-box">
+            <span class="url-pill-text" id="connect-network-url">http://10.163.119.20:8080</span>
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-copy-network-url" title="Copy network URL">
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-bottom:1.25rem;">
+          <label class="form-label" style="margin-bottom:0.4rem;display:block;">Localhost URL (For this laptop browser):</label>
+          <div class="url-pill-box">
+            <span class="url-pill-text" id="connect-local-url">http://localhost:8080</span>
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-copy-local-url" title="Copy local URL">
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <div class="device-connect-steps">
+          <div class="device-connect-step">
+            <span class="step-num">1</span>
+            <span>Connect your phone or other device to the same Wi-Fi network.</span>
+          </div>
+          <div class="device-connect-step">
+            <span class="step-num">2</span>
+            <span>Scan the QR code above or type the URL into Chrome/Safari.</span>
+          </div>
+          <div class="device-connect-step">
+            <span class="step-num">3</span>
+            <span>Register or log in using your Phone Number and Email ID.</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-close-modal">Got It</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL: STUDENT PROFILE & ACCOUNT
+       ========================================== -->
+  <div class="modal-backdrop" id="modal-student-profile">
+    <div class="modal-dialog" style="max-width:520px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="display:flex;align-items:center;gap:0.5rem;">
+          <span>🎓</span> Student Profile & Account
+        </h3>
+        <button type="button" class="btn-icon btn-close-modal" title="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="profile-modal-hero">
+          <div class="profile-avatar-large" id="modal-profile-avatar">A</div>
+          <div class="profile-info-block">
+            <h3 id="modal-profile-name">Alex Mitchell</h3>
+            <p id="modal-profile-level">Undergraduate / College</p>
+            <span class="badge" style="background:rgba(16,185,129,0.15);color:var(--emerald);font-size:0.72rem;padding:2px 8px;border-radius:12px;margin-top:4px;display:inline-block;">Active Verified Student</span>
+          </div>
+        </div>
+
+        <div class="profile-details-grid">
+          <div class="profile-detail-card">
+            <div class="profile-detail-label">Registered Email</div>
+            <div class="profile-detail-val" id="modal-profile-email">student@studyflow.edu</div>
+          </div>
+          <div class="profile-detail-card">
+            <div class="profile-detail-label">Registered Phone</div>
+            <div class="profile-detail-val" id="modal-profile-phone">+91 9876543210</div>
+          </div>
+          <div class="profile-detail-card">
+            <div class="profile-detail-label">Daily Target Study</div>
+            <div class="profile-detail-val" id="modal-profile-target">4.5 hrs/day</div>
+          </div>
+          <div class="profile-detail-card">
+            <div class="profile-detail-label">Active Streak</div>
+            <div class="profile-detail-val" id="modal-profile-streak">🔥 4 Days</div>
+          </div>
+        </div>
+
+        <div style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:0.85rem;font-size:0.8rem;color:var(--text-muted);display:flex;align-items:center;justify-content:space-between;">
+          <div>
+            <div style="font-weight:600;color:var(--text-main);">Mobile & Cross-Device Sync</div>
+            <div style="font-size:0.72rem;color:var(--text-faint);">Sign in with this Phone & Email on any phone or laptop</div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-profile-open-qr">View QR</button>
+        </div>
+      </div>
+      <div class="modal-footer" style="justify-content:space-between;">
+        <button type="button" class="btn btn-outline-danger" id="btn-profile-logout">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Log Out / Switch Student</span>
+        </button>
+        <button type="button" class="btn btn-primary btn-close-modal">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MANDATORY AUTHENTICATION GATEKEEPER PORTAL
+       Non-negotiable Student Registration & Login
+       ========================================== -->
+  <div id="auth-overlay" class="auth-overlay">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-brand">
+          <div class="brand-logo-icon">SF</div>
+          <div>
+            <div class="auth-brand-title">StudyFlow</div>
+            <span class="auth-brand-subtitle">Smart Academic Planner</span>
+          </div>
+        </div>
+        <div class="auth-badge">
+          <span class="badge-dot"></span> Student Portal
+        </div>
+      </div>
+
+      <!-- Alert Box -->
+      <div id="auth-alert" class="auth-alert" style="display:none;"></div>
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" id="tab-auth-login">Sign In</button>
+        <button type="button" class="auth-tab" id="tab-auth-register">Register Student</button>
+      </div>
+
+      <!-- SIGN IN FORM -->
+      <form id="form-auth-login" class="auth-form">
+        <div class="auth-intro">
+          <h3>Welcome to StudyFlow 👋</h3>
+          <p>Mandatory student sign in. Enter your registered Phone Number or Email ID to access your academic schedule.</p>
+        </div>
+
+        <div class="form-group" style="margin-bottom:1rem;">
+          <label class="form-label" for="login-identifier">Phone Number or Email ID <span style="color:var(--rose);">*</span></label>
+          <div class="input-with-icon">
+            <svg class="input-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input type="text" class="form-input" id="login-identifier" placeholder="e.g. 9876543210 or student@studyflow.edu" required autocomplete="username">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:1.25rem;">
+          <label class="form-label" for="login-password">Password <span style="color:var(--rose);">*</span></label>
+          <div class="input-with-icon password-group">
+            <svg class="input-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" class="form-input" id="login-password" placeholder="Enter your password" required autocomplete="current-password">
+            <button type="button" class="btn-toggle-pw" id="btn-toggle-pw-login" title="Show/Hide Password" tabindex="-1">👁️</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-submit-login">
+          <span>Sign In to StudyFlow</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+
+        <div class="auth-demo-hint">
+          <span>⚡ Quick Test Demo Account:</span>
+          <button type="button" class="btn-demo-fill" id="btn-fill-demo">
+            Click to auto-fill: <code>student@studyflow.edu</code> (Phone: <code>9876543210</code>)
+          </button>
+        </div>
+
+        <div class="auth-switch-prompt">
+          <span>New student?</span>
+          <button type="button" class="btn-link" id="link-to-register">Create a Student Account</button>
+        </div>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="form-auth-register" class="auth-form" style="display:none;">
+        <div class="auth-intro">
+          <h3>Create Student Account 🎓</h3>
+          <p>Mandatory registration. Enter your Phone Number & Email ID to initialize your academic timetable.</p>
+        </div>
+
+        <div class="form-group" style="margin-bottom:0.85rem;">
+          <label class="form-label" for="reg-name">Student Full Name <span style="color:var(--rose);">*</span></label>
+          <div class="input-with-icon">
+            <svg class="input-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input type="text" class="form-input" id="reg-name" placeholder="e.g. Alex Mitchell" required autocomplete="name">
+          </div>
+        </div>
+
+        <div class="form-row" style="margin-bottom:0.85rem;">
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email ID <span style="color:var(--rose);">*</span></label>
+            <div class="input-with-icon">
+              <svg class="input-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input type="email" class="form-input" id="reg-email" placeholder="student@example.com" required autocomplete="email">
+            </div>
+            <small class="form-hint">Used for schedule summaries</small>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-phone">Phone Number <span style="color:var(--rose);">*</span></label>
+            <div class="input-with-icon">
+              <svg class="input-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <input type="tel" class="form-input" id="reg-phone" placeholder="e.g. 9876543210" required autocomplete="tel">
+            </div>
+            <small class="form-hint">Min 10 digits required</small>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:0.85rem;">
+          <label class="form-label" for="reg-academic-level">Academic Level / Course</label>
+          <select class="form-input" id="reg-academic-level">
+            <option value="Undergraduate / College" selected>Undergraduate / College</option>
+            <option value="High School (11th - 12th)">High School (11th - 12th)</option>
+            <option value="Secondary School (9th - 10th)">Secondary School (9th - 10th)</option>
+            <option value="Postgraduate / Masters">Postgraduate / Masters</option>
+            <option value="Competitive Exam (JEE/NEET/GATE/UPSC)">Competitive Exam (JEE/NEET/GATE/UPSC)</option>
+            <option value="Self Study / Certification">Self Study / Certification</option>
+          </select>
+        </div>
+
+        <div class="form-row" style="margin-bottom:0.85rem;">
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password <span style="color:var(--rose);">*</span></label>
+            <div class="input-with-icon password-group">
+              <input type="password" class="form-input" id="reg-password" placeholder="Min 6 characters" required autocomplete="new-password">
+              <button type="button" class="btn-toggle-pw" id="btn-toggle-pw-reg" title="Show/Hide Password" tabindex="-1">👁️</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-confirm-password">Confirm Password <span style="color:var(--rose);">*</span></label>
+            <div class="input-with-icon password-group">
+              <input type="password" class="form-input" id="reg-confirm-password" placeholder="Confirm password" required autocomplete="new-password">
+              <button type="button" class="btn-toggle-pw" id="btn-toggle-pw-reg-conf" title="Show/Hide Password" tabindex="-1">👁️</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-checkbox-label">
+          <input type="checkbox" id="reg-terms" required checked>
+          <label for="reg-terms">I confirm my phone & email are correct to sync my study plan</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-submit-register">
+          <span>Create Student Account & Launch</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </button>
+
+        <div class="auth-switch-prompt">
+          <span>Already registered?</span>
+          <button type="button" class="btn-link" id="link-to-login">Sign In here</button>
+        </div>
+      </form>
+
+      <div class="auth-footer-info">
+        🔒 Access from any Laptop or Mobile • Wi-Fi Sync Enabled
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Application Entry Point -->
+  <script type="module" src="js/app.js"></script>
+</body>
+
+</html>
